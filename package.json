@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/typeorm/**",
+      "**/typeorm",
+      "**/typeorm-seeding/**",
+      "**/typeorm-seeding"
+    ]
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "name": "gtrn",
+  "scripts": {
+    "new-version": "lerna version",
+    "docker:build": "docker build -t kittishane/cookknow:$VERSION .",
+    "docker:login": "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD",
+    "docker:push": "docker push kittishane/cookknow:$VERSION",
+    "ci:docker": "yarn docker:build && yarn docker:login && yarn docker:push",
+    "ci:dokku": "ssh shane@128.199.205.119 && docker pull kittishane/cookknow:$VERSION && docker tag kittishane/cookknow:$VERSION dokku/server:latest && echo $DOKKU_PASSWORD | sudo -S dokku tags:deploy server latest"
+  }
+}
