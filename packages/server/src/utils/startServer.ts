@@ -3,20 +3,19 @@ import express from "express";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 
-import { PostResolver } from "../resolvers/post";
-import { UserResolver } from "../resolvers/user";
-import { MyContext } from "../types";
 import connectRedis from "connect-redis";
 import cors from "cors";
-import dotenv from "dotenv-safe";
 import session from "express-session";
 import Redis from "ioredis";
 import { COOKIE_NAME, __prod__ } from "../constants";
 import { AddressResolver } from "../resolvers/address";
+import { HelloResolver } from "../resolvers/hello";
+import { PostResolver } from "../resolvers/post";
+import { UserResolver } from "../resolvers/user";
+import { MyContext } from "../types";
 import { createTypeORMConn } from "./createTypeORMConn";
 import { upvoteLoader } from "./createUpvoteLoader";
 import { createUserLoader } from "./createUserLoader";
-import { HelloResolver } from "../resolvers/hello";
 
 export const startServer = async () => {
   console.log("This is", process.env.NODE_ENV, "environment.");
@@ -105,7 +104,7 @@ export const startServer = async () => {
     const PORT = parseInt(process.env.PORT, 10);
 
     const server = app.listen(PORT, () => {
-      console.log(`server started on port 4000`);
+      console.log(`server started on port ${PORT}`);
     });
     return { server, connection: conn };
   } catch (error) {

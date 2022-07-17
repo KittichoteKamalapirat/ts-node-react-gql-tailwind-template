@@ -4,7 +4,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,34 +12,33 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
 };
 
 export type Address = {
   __typename?: 'Address';
+  country: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  district: Scalars['String'];
   id: Scalars['Float'];
   line1: Scalars['String'];
   line2: Scalars['String'];
-  subdistrict: Scalars['String'];
-  district: Scalars['String'];
-  province: Scalars['String'];
-  country: Scalars['String'];
   postcode: Scalars['String'];
-  userId: Scalars['Int'];
-  user: User;
-  createdAt: Scalars['DateTime'];
+  province: Scalars['String'];
+  subdistrict: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+  user: User;
+  userId: Scalars['String'];
 };
 
 export type AddressInput = {
+  country: Scalars['String'];
+  district: Scalars['String'];
   line1: Scalars['String'];
   line2: Scalars['String'];
-  subdistrict: Scalars['String'];
-  district: Scalars['String'];
-  province: Scalars['String'];
-  country: Scalars['String'];
   postcode: Scalars['String'];
+  province: Scalars['String'];
+  subdistrict: Scalars['String'];
 };
 
 
@@ -52,47 +51,30 @@ export type FieldError = {
 export type Mutation = {
   __typename?: 'Mutation';
   changePassword: UserResponse;
+  createAddress: Address;
+  createPost: Post;
+  deleteAddress: Scalars['Boolean'];
+  deletePost: Scalars['Boolean'];
   forgotPassword: Scalars['Boolean'];
-  register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
-  vote: Scalars['Boolean'];
-  createPost: Post;
-  updatePost?: Maybe<Post>;
-  deletePost: Scalars['Boolean'];
-  signS3: PostSignedS3;
+  register: UserResponse;
   signAvatarS3: SignedS3;
-  createAddress: Address;
+  signS3: PostSignedS3;
   updateAddress?: Maybe<Address>;
-  deleteAddress: Scalars['Boolean'];
+  updatePost?: Maybe<Post>;
+  vote: Scalars['Boolean'];
 };
 
 
 export type MutationChangePasswordArgs = {
-  token: Scalars['String'];
   newPassword: Scalars['String'];
+  token: Scalars['String'];
 };
 
 
-export type MutationForgotPasswordArgs = {
-  email: Scalars['String'];
-};
-
-
-export type MutationRegisterArgs = {
-  data: UsernamePasswordInput;
-};
-
-
-export type MutationLoginArgs = {
-  password: Scalars['String'];
-  usernameOrEmail: Scalars['String'];
-};
-
-
-export type MutationVoteArgs = {
-  value: Scalars['Int'];
-  postId: Scalars['Int'];
+export type MutationCreateAddressArgs = {
+  input: AddressInput;
 };
 
 
@@ -101,10 +83,7 @@ export type MutationCreatePostArgs = {
 };
 
 
-export type MutationUpdatePostArgs = {
-  videoUrl: Scalars['String'];
-  text: Scalars['String'];
-  title: Scalars['String'];
+export type MutationDeleteAddressArgs = {
   id: Scalars['Int'];
 };
 
@@ -114,11 +93,19 @@ export type MutationDeletePostArgs = {
 };
 
 
-export type MutationSignS3Args = {
-  thumbnailFiletype: Scalars['String'];
-  videoFiletype: Scalars['String'];
-  thumbnailname: Scalars['String'];
-  videoname: Scalars['String'];
+export type MutationForgotPasswordArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationLoginArgs = {
+  password: Scalars['String'];
+  usernameOrEmail: Scalars['String'];
+};
+
+
+export type MutationRegisterArgs = {
+  data: UsernamePasswordInput;
 };
 
 
@@ -128,68 +115,86 @@ export type MutationSignAvatarS3Args = {
 };
 
 
-export type MutationCreateAddressArgs = {
-  input: AddressInput;
+export type MutationSignS3Args = {
+  thumbnailFiletype: Scalars['String'];
+  thumbnailname: Scalars['String'];
+  videoFiletype: Scalars['String'];
+  videoname: Scalars['String'];
 };
 
 
 export type MutationUpdateAddressArgs = {
-  input: AddressInput;
   id: Scalars['Int'];
+  input: AddressInput;
 };
 
 
-export type MutationDeleteAddressArgs = {
+export type MutationUpdatePostArgs = {
   id: Scalars['Int'];
+  text: Scalars['String'];
+  title: Scalars['String'];
+};
+
+
+export type MutationVoteArgs = {
+  postId: Scalars['Int'];
+  value: Scalars['Int'];
 };
 
 export type PaginatedPosts = {
   __typename?: 'PaginatedPosts';
-  posts: Array<Post>;
   hasMore: Scalars['Boolean'];
+  posts: Array<Post>;
 };
 
 export type Post = {
   __typename?: 'Post';
-  id: Scalars['Float'];
-  title: Scalars['String'];
-  text: Scalars['String'];
-  points: Scalars['Float'];
-  voteStatus?: Maybe<Scalars['Int']>;
-  thumbnailUrl: Scalars['String'];
-  videoUrl: Scalars['String'];
-  creatorId: Scalars['String'];
-  creator: User;
   createdAt: Scalars['String'];
-  updatedAt: Scalars['String'];
+  creator: User;
+  creatorId: Scalars['String'];
+  id: Scalars['Float'];
+  points: Scalars['Float'];
+  text: Scalars['String'];
   textSnippet: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt: Scalars['String'];
+  voteStatus?: Maybe<Scalars['Int']>;
 };
 
 export type PostInput = {
-  title: Scalars['String'];
   text: Scalars['String'];
-  videoUrl: Scalars['String'];
-  thumbnailUrl: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type PostSignedS3 = {
   __typename?: 'PostSignedS3';
-  videoSignedRequest: Scalars['String'];
   thumbnailSignedRequest: Scalars['String'];
-  videoUrl: Scalars['String'];
   thumbnailUrl: Scalars['String'];
+  videoSignedRequest: Scalars['String'];
+  videoUrl: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
-  users: Array<User>;
-  user: User;
-  me?: Maybe<User>;
-  votedPosts: PaginatedPosts;
-  posts: PaginatedPosts;
-  post?: Maybe<Post>;
   address: Address;
+  hello: Scalars['String'];
+  me?: Maybe<User>;
+  post?: Maybe<Post>;
+  posts: PaginatedPosts;
+  user: User;
+  users: Array<User>;
+  votedPosts: PaginatedPosts;
+};
+
+
+export type QueryPostArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryPostsArgs = {
+  cursor?: Maybe<Scalars['String']>;
+  limit: Scalars['Int'];
 };
 
 
@@ -203,17 +208,6 @@ export type QueryVotedPostsArgs = {
   limit: Scalars['Int'];
 };
 
-
-export type QueryPostsArgs = {
-  cursor?: Maybe<Scalars['String']>;
-  limit: Scalars['Int'];
-};
-
-
-export type QueryPostArgs = {
-  id: Scalars['Int'];
-};
-
 export type SignedS3 = {
   __typename?: 'SignedS3';
   signedRequest: Scalars['String'];
@@ -222,12 +216,12 @@ export type SignedS3 = {
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['String'];
-  username: Scalars['String'];
-  email: Scalars['String'];
   avatar: Scalars['String'];
   createdAt: Scalars['DateTime'];
+  email: Scalars['String'];
+  id: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+  username: Scalars['String'];
 };
 
 export type UserResponse = {
@@ -238,12 +232,12 @@ export type UserResponse = {
 
 /** Argument for register user */
 export type UsernamePasswordInput = {
-  username: Scalars['String'];
   email: Scalars['String'];
-  password?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  username: Scalars['String'];
 };
 
-export type PostSnippetFragment = { __typename?: 'Post', id: number, title: string, textSnippet: string, videoUrl: string, createdAt: string, updatedAt: string, points: number, voteStatus?: Maybe<number>, creator: { __typename?: 'User', id: string, username: string, avatar: string } };
+export type PostSnippetFragment = { __typename?: 'Post', id: number, title: string, textSnippet: string, createdAt: string, updatedAt: string, points: number, voteStatus?: Maybe<number>, creator: { __typename?: 'User', id: string, username: string, avatar: string } };
 
 export type RegularErrorFragment = { __typename?: 'FieldError', field: string, message: string };
 
@@ -264,14 +258,14 @@ export type CreateAddressMutationVariables = Exact<{
 }>;
 
 
-export type CreateAddressMutation = { __typename?: 'Mutation', createAddress: { __typename?: 'Address', userId: number, line1: string, line2: string, subdistrict: string, district: string, province: string, country: string, postcode: string } };
+export type CreateAddressMutation = { __typename?: 'Mutation', createAddress: { __typename?: 'Address', userId: string, line1: string, line2: string, subdistrict: string, district: string, province: string, country: string, postcode: string } };
 
 export type CreatePostMutationVariables = Exact<{
   input: PostInput;
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: number, title: string, text: string, videoUrl: string, points: number, creatorId: string, createdAt: string, updatedAt: string } };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: number, title: string, text: string, points: number, creatorId: string, createdAt: string, updatedAt: string } };
 
 export type DeleteAddressMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -314,33 +308,22 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: string, username: string, avatar: string }> } };
 
-export type SignS3MutationVariables = Exact<{
-  videoname: Scalars['String'];
-  thumbnailname: Scalars['String'];
-  videoFiletype: Scalars['String'];
-  thumbnailFiletype: Scalars['String'];
-}>;
-
-
-export type SignS3Mutation = { __typename?: 'Mutation', signS3: { __typename?: 'PostSignedS3', videoSignedRequest: string, thumbnailSignedRequest: string, videoUrl: string, thumbnailUrl: string } };
-
 export type UpdateAddressMutationVariables = Exact<{
   input: AddressInput;
   id: Scalars['Int'];
 }>;
 
 
-export type UpdateAddressMutation = { __typename?: 'Mutation', updateAddress?: Maybe<{ __typename?: 'Address', userId: number, line1: string, line2: string, subdistrict: string, district: string, province: string, country: string, postcode: string }> };
+export type UpdateAddressMutation = { __typename?: 'Mutation', updateAddress?: Maybe<{ __typename?: 'Address', userId: string, line1: string, line2: string, subdistrict: string, district: string, province: string, country: string, postcode: string }> };
 
 export type UpdatePostMutationVariables = Exact<{
   id: Scalars['Int'];
   title: Scalars['String'];
   text: Scalars['String'];
-  videoUrl: Scalars['String'];
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: Maybe<{ __typename?: 'Post', id: number, title: string, textSnippet: string, videoUrl: string }> };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: Maybe<{ __typename?: 'Post', id: number, title: string, textSnippet: string }> };
 
 export type VoteMutationVariables = Exact<{
   value: Scalars['Int'];
@@ -353,7 +336,7 @@ export type VoteMutation = { __typename?: 'Mutation', vote: boolean };
 export type AddressQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AddressQuery = { __typename?: 'Query', address: { __typename?: 'Address', id: number, userId: number, line1: string, line2: string, subdistrict: string, district: string, province: string, country: string, postcode: string } };
+export type AddressQuery = { __typename?: 'Query', address: { __typename?: 'Address', id: number, userId: string, line1: string, line2: string, subdistrict: string, district: string, province: string, country: string, postcode: string } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -365,7 +348,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: number, title: string, text: string, videoUrl: string, thumbnailUrl: string, createdAt: string, updatedAt: string, points: number, voteStatus?: Maybe<number>, creator: { __typename?: 'User', id: string, username: string } }> };
+export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: number, title: string, text: string, createdAt: string, updatedAt: string, points: number, voteStatus?: Maybe<number>, creator: { __typename?: 'User', id: string, username: string } }> };
 
 export type PostsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -373,7 +356,7 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'PaginatedPosts', hasMore: boolean, posts: Array<{ __typename?: 'Post', id: number, title: string, textSnippet: string, videoUrl: string, createdAt: string, updatedAt: string, points: number, voteStatus?: Maybe<number>, creator: { __typename?: 'User', id: string, username: string, avatar: string } }> } };
+export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'PaginatedPosts', hasMore: boolean, posts: Array<{ __typename?: 'Post', id: number, title: string, textSnippet: string, createdAt: string, updatedAt: string, points: number, voteStatus?: Maybe<number>, creator: { __typename?: 'User', id: string, username: string, avatar: string } }> } };
 
 export type VotedPostsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -381,14 +364,13 @@ export type VotedPostsQueryVariables = Exact<{
 }>;
 
 
-export type VotedPostsQuery = { __typename?: 'Query', votedPosts: { __typename?: 'PaginatedPosts', hasMore: boolean, posts: Array<{ __typename?: 'Post', id: number, title: string, textSnippet: string, videoUrl: string, thumbnailUrl: string }> } };
+export type VotedPostsQuery = { __typename?: 'Query', votedPosts: { __typename?: 'PaginatedPosts', hasMore: boolean, posts: Array<{ __typename?: 'Post', id: number, title: string, textSnippet: string }> } };
 
 export const PostSnippetFragmentDoc = gql`
     fragment PostSnippet on Post {
   id
   title
   textSnippet
-  videoUrl
   createdAt
   updatedAt
   points
@@ -504,7 +486,6 @@ export const CreatePostDocument = gql`
     id
     title
     text
-    videoUrl
     points
     creatorId
     createdAt
@@ -728,50 +709,6 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
-export const SignS3Document = gql`
-    mutation signS3($videoname: String!, $thumbnailname: String!, $videoFiletype: String!, $thumbnailFiletype: String!) {
-  signS3(
-    videoname: $videoname
-    thumbnailname: $thumbnailname
-    videoFiletype: $videoFiletype
-    thumbnailFiletype: $thumbnailFiletype
-  ) {
-    videoSignedRequest
-    thumbnailSignedRequest
-    videoUrl
-    thumbnailUrl
-  }
-}
-    `;
-export type SignS3MutationFn = Apollo.MutationFunction<SignS3Mutation, SignS3MutationVariables>;
-
-/**
- * __useSignS3Mutation__
- *
- * To run a mutation, you first call `useSignS3Mutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSignS3Mutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [signS3Mutation, { data, loading, error }] = useSignS3Mutation({
- *   variables: {
- *      videoname: // value for 'videoname'
- *      thumbnailname: // value for 'thumbnailname'
- *      videoFiletype: // value for 'videoFiletype'
- *      thumbnailFiletype: // value for 'thumbnailFiletype'
- *   },
- * });
- */
-export function useSignS3Mutation(baseOptions?: Apollo.MutationHookOptions<SignS3Mutation, SignS3MutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignS3Mutation, SignS3MutationVariables>(SignS3Document, options);
-      }
-export type SignS3MutationHookResult = ReturnType<typeof useSignS3Mutation>;
-export type SignS3MutationResult = Apollo.MutationResult<SignS3Mutation>;
-export type SignS3MutationOptions = Apollo.BaseMutationOptions<SignS3Mutation, SignS3MutationVariables>;
 export const UpdateAddressDocument = gql`
     mutation updateAddress($input: AddressInput!, $id: Int!) {
   updateAddress(input: $input, id: $id) {
@@ -814,12 +751,11 @@ export type UpdateAddressMutationHookResult = ReturnType<typeof useUpdateAddress
 export type UpdateAddressMutationResult = Apollo.MutationResult<UpdateAddressMutation>;
 export type UpdateAddressMutationOptions = Apollo.BaseMutationOptions<UpdateAddressMutation, UpdateAddressMutationVariables>;
 export const UpdatePostDocument = gql`
-    mutation UpdatePost($id: Int!, $title: String!, $text: String!, $videoUrl: String!) {
-  updatePost(id: $id, title: $title, text: $text, videoUrl: $videoUrl) {
+    mutation UpdatePost($id: Int!, $title: String!, $text: String!) {
+  updatePost(id: $id, title: $title, text: $text) {
     id
     title
     textSnippet
-    videoUrl
   }
 }
     `;
@@ -841,7 +777,6 @@ export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, U
  *      id: // value for 'id'
  *      title: // value for 'title'
  *      text: // value for 'text'
- *      videoUrl: // value for 'videoUrl'
  *   },
  * });
  */
@@ -966,8 +901,6 @@ export const PostDocument = gql`
     id
     title
     text
-    videoUrl
-    thumbnailUrl
     createdAt
     updatedAt
     points
@@ -1053,8 +986,6 @@ export const VotedPostsDocument = gql`
       id
       title
       textSnippet
-      videoUrl
-      thumbnailUrl
     }
     hasMore
   }

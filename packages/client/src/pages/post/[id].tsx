@@ -30,9 +30,7 @@ const Post = ({}) => {
     <Layout>
       <Heading mb={4}>{data?.post?.title}</Heading>
       <Box mb={4}> {data?.post?.text}</Box>
-      <Box boxSize="sm">
-        <Image src={data?.post?.thumbnailUrl} alt="image" />
-      </Box>
+
       <video width="320" height="240" controls>
         <source src={data?.post?.videoUrl} type="video/mp4" />
         Your browser does not support the video tag.

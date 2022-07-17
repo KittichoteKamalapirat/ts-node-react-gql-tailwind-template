@@ -3,7 +3,6 @@ mutation createPost($input: PostInput!) {
     id
     title
     text
-    videoUrl
     points
     creatorId
     createdAt

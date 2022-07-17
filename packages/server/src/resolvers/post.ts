@@ -49,10 +49,6 @@ class PostInput {
   title: string;
   @Field()
   text: string;
-  @Field()
-  videoUrl: string;
-  @Field()
-  thumbnailUrl: string;
 }
 
 @ObjectType()
@@ -294,13 +290,13 @@ export class PostResolver {
     @Arg("id", () => Int) id: number,
     @Arg("title") title: string,
     @Arg("text") text: string,
-    @Arg("videoUrl") videoUrl: string,
+
     @Ctx() { req }: MyContext
   ): Promise<Post | null> {
     const result = await getConnection()
       .createQueryBuilder()
       .update(Post)
-      .set({ title, text, videoUrl })
+      .set({ title, text })
       .where('id = :id and "creatorId" = :creatorId', {
         id: id,
         creatorId: req.session.userId,

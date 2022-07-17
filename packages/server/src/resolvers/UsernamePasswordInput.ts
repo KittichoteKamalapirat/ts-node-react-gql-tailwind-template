@@ -10,6 +10,6 @@ export class UsernamePasswordInput {
   @Field()
   email: string;
 
-  @Field({ nullable: true })
+  @Field()
   password: string;
 }
