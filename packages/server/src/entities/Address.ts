@@ -15,7 +15,7 @@ import { User } from "./User";
 export class Address extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field()
-  id!: number;
+  id: number;
 
   @Column({ nullable: true })
   @Field()

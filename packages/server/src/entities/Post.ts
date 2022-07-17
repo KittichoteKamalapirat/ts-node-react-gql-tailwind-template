@@ -17,30 +17,30 @@ import { User } from "./User";
 export class Post extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field()
-  id!: number;
+  id: number;
 
   @Column({ nullable: true })
   @Field()
-  title!: string;
+  title: string;
 
   @Column({ nullable: true })
   @Field()
-  text!: string;
+  text: string;
 
   @Column({ type: "int", default: 0 })
   @Field()
-  points!: number;
+  points: number;
 
   @Field(() => Int, { nullable: true })
   voteStatus: number | null; //willl be 1 or -1, this is used to check the status of this post for a user
 
   @Column({ nullable: true })
   @Field()
-  thumbnailUrl!: string;
+  thumbnailUrl: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field()
-  videoUrl!: string;
+  videoUrl: string;
 
   @Column()
   @Field()

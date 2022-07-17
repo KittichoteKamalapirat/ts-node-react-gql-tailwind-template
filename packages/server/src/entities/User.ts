@@ -19,29 +19,29 @@ import { Upvote } from "./Upvote";
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   @Field()
-  id!: string;
+  id: string;
 
   // will use this later
   //   @Column({ unique: true })
   //   @Field()
-  //   phone_no!: string;
+  //   phone_no: string;
 
   @Column({ unique: true })
   @Field()
-  username!: string;
+  username: string;
 
   // , nullable: true
   @Column({ unique: true })
   @Field()
-  email!: string;
+  email: string;
 
   @Column({ unique: true })
   @Field()
-  avatar!: string;
+  avatar: string;
 
   //   Client can't query for pass word it will and hashed
   @Column()
-  password!: string;
+  password: string;
 
   @OneToMany((type) => Post, (post) => post.creator)
   posts: Post[];

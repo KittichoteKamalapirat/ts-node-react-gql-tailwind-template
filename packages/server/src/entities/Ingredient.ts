@@ -15,19 +15,19 @@ import { Post } from "./Post";
 export class Ingredient extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field()
-  id!: number;
+  id: number;
 
   @Column()
   @Field()
-  ingredient!: string;
+  ingredient: string;
 
   @Column()
   @Field()
-  amount!: number;
+  amount: number;
 
   @Column()
   @Field()
-  unit!: string;
+  unit: string;
 
   @Field()
   @Column()
