@@ -15,6 +15,8 @@ export const urlResolver = {
   index: () => {
     return "/";
   },
+  // post
+  editPost: (id: string) => `/post/edit/${id}`,
 
   createAddress: () => "/account/address/create",
   // API

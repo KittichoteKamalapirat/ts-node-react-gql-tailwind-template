@@ -1,8 +1,10 @@
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Box, IconButton, Link } from "@chakra-ui/react";
+import IconButton from "@/components/Buttons/IconButton";
+import { PencilSquare } from "@styled-icons/bootstrap";
+import { DeleteBin } from "@styled-icons/remix-line";
 import React from "react";
-import NextLink from "next/link";
 import { useDeletePostMutation } from "../generated/graphql";
+import { urlResolver } from "../lib/UrlResolver";
+import Button, { ButtonTypes } from "./Buttons/Button";
 
 interface EditDeletePostButtonsProps {
   id: number;
@@ -12,30 +14,28 @@ export const EditDeletePostButtons: React.FC<EditDeletePostButtonsProps> = ({
   id,
 }) => {
   const [deletePost] = useDeletePostMutation();
-  return (
-    <Box m={2}>
-      <NextLink href="/post/edit/[id]" as={`/post/edit/${id}`}>
-        <IconButton
-          as={Link}
-          aria-label="Edit post"
-          icon={<EditIcon />}
-          bgColor="white"
-        ></IconButton>
-      </NextLink>
 
+  const handleDeletePost = () => {
+    deletePost({
+      variables: { id },
+      update: (cache) => {
+        cache.evict({ id: "Post:" + id }); //Post: 60
+      },
+    });
+  };
+  return (
+    <div>
+      <Button
+        label=""
+        startIcon={<PencilSquare height={20} width={20} />}
+        href={urlResolver.editPost(String(id))}
+        type={ButtonTypes.TEXT}
+      />
       <IconButton
-        aria-label="Delete post"
-        icon={<DeleteIcon />}
-        bgColor="white"
-        onClick={() =>
-          deletePost({
-            variables: { id },
-            update: (cache) => {
-              cache.evict({ id: "Post:" + id }); //Post: 60
-            },
-          })
-        }
-      ></IconButton>
-    </Box>
+        onClick={handleDeletePost}
+        label="delete-icon"
+        icon={<DeleteBin height={20} width={20} />}
+      />
+    </div>
   );
 };
