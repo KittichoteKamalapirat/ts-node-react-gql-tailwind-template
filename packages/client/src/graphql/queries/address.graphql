@@ -1,10 +1,12 @@
 query address {
   address {
     id
+    name
+    phoneNumber
     userId
     line1
     line2
-    subdistrict
+    subDistrict
     district
     province
     country

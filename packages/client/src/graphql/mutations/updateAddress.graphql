@@ -1,9 +1,11 @@
 mutation updateAddress($input: AddressInput!, $id: Int!) {
   updateAddress(input: $input, id: $id) {
+    name
+    phoneNumber
     userId
     line1
     line2
-    subdistrict
+    subDistrict
     district
     province
     country

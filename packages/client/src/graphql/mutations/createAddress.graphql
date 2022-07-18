@@ -1,9 +1,11 @@
 mutation createAddress($input: AddressInput!) {
   createAddress(input: $input) {
+    name
+    phoneNumber
     userId
     line1
     line2
-    subdistrict
+    subDistrict
     district
     province
     country

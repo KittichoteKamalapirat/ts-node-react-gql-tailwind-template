@@ -17,6 +17,14 @@ export class Address extends BaseEntity {
   @Field()
   id: number;
 
+  @Column()
+  @Field()
+  name!: string;
+
+  @Column()
+  @Field()
+  phoneNumber!: string;
+
   @Column({ nullable: true })
   @Field()
   line1: string;
@@ -27,7 +35,7 @@ export class Address extends BaseEntity {
 
   @Column({ nullable: true })
   @Field()
-  subdistrict: string;
+  subDistrict: string;
 
   @Column({ nullable: true })
   @Field()

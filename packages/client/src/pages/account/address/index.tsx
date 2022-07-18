@@ -10,6 +10,11 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Box, IconButton, Link, Text } from "@chakra-ui/react";
 import { useIsAuth } from "../../../util/useIsAuth";
 import { withApollo } from "../../../util/withApollo";
+import Button, {
+  ButtonTypes,
+  HTMLButtonType,
+} from "../../../components/Buttons/Button";
+import { urlResolver } from "../../../lib/UrlResolver";
 
 interface addressProps {}
 
@@ -29,20 +34,25 @@ const Address: React.FC<addressProps> = ({}) => {
   const noAddress = (
     <Layout>
       <Text>You have not added yoru address yet</Text>
-      <NextLink href="/account/address/create" as="/account/address/create">
-        <Link>Add address</Link>
-      </NextLink>
+
+      <Button
+        type={ButtonTypes.PRIMARY}
+        label="Add address"
+        buttonType={HTMLButtonType.SUBMIT}
+        spacing="px-3.5 mt-2"
+        href={urlResolver.createAddress()}
+      />
     </Layout>
   );
   return !data ? (
     noAddress
   ) : (
     <Layout>
-      <h1>ที่อยู่จัดส่ง</h1>
+      <h1>Address</h1>
       <Box>
         <Text>
           {data?.address.line1} {data?.address.line2}{" "}
-          {data?.address.subdistrict} {data?.address.district}{" "}
+          {data?.address.subDistrict} {data?.address.district}{" "}
           <Text>
             {" "}
             {data?.address.province} {data?.address.country}{" "}

@@ -17,11 +17,15 @@ import { MyContext } from "../types";
 @InputType()
 class AddressInput {
   @Field()
+  name: string;
+  @Field()
+  phoneNumber: string;
+  @Field()
   line1: string;
   @Field()
   line2: string;
   @Field()
-  subdistrict: string;
+  subDistrict: string;
   @Field()
   district: string;
   @Field()
@@ -66,9 +70,11 @@ export class AddressResolver {
       .createQueryBuilder()
       .update(Address)
       .set({
+        name: input.name,
+        phoneNumber: input.phoneNumber,
         line1: input.line1,
         line2: input.line2,
-        subdistrict: input.subdistrict,
+        subDistrict: input.subDistrict,
         district: input.district,
         province: input.province,
         country: input.country,

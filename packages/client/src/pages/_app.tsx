@@ -1,6 +1,7 @@
 import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
 import theme from "../theme";
 import React from "react";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: any) {
   console.log("NODE_ENV: " + process.env.NODE_ENV);

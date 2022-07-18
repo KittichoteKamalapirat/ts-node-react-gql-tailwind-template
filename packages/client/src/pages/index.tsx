@@ -66,10 +66,6 @@ const Index = () => {
 
                 <Flex key={post.id}>
                   <Box flex={1}>
-                    <video controls>
-                      <source src={post.videoUrl} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
                     <Flex justifyContent="space-between">
                       <UpvoteSection post={post} />
 

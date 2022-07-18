@@ -1,8 +1,9 @@
-import { Button, Flex } from "@chakra-ui/react";
-import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import React from "react";
-import { InputField } from "../../../components/InputField";
+import { Dispatch, SetStateAction } from "react";
+import { UseFormSetError } from "react-hook-form";
+import AddressEditor, {
+  AddressFormValues,
+} from "../../../components/forms/AddressEditor";
 import { Layout } from "../../../components/Layout";
 import {
   AddressInput,
@@ -11,22 +12,26 @@ import {
 import { useIsAuth } from "../../../util/useIsAuth";
 import { withApollo } from "../../../util/withApollo";
 
-interface CreateAddressProps {}
-
-const CreateAddress: React.FC<CreateAddressProps> = ({}) => {
+const CreateAddress = ({}) => {
   const [createAddress] = useCreateAddressMutation();
   const router = useRouter();
   useIsAuth();
 
-  const handleOnSubmit = async (values: any) => {
+  const handleSubmitForm = async (
+    data: AddressFormValues,
+    setError: UseFormSetError<AddressFormValues>,
+    setGenericErrorMessage: Dispatch<SetStateAction<string>>
+  ) => {
     const input: AddressInput = {
-      line1: values.line1,
-      line2: values.line2,
-      subdistrict: values.subdistrict,
-      district: values.district,
-      province: values.province,
-      country: values.country,
-      postcode: values.postcode,
+      name: data.name,
+      phoneNumber: data.phoneNumber,
+      line1: data.line1,
+      line2: data.line2,
+      subDistrict: data.subDistrict,
+      district: data.district,
+      province: data.province,
+      country: data.country,
+      postcode: data.postcode,
     };
     const { errors } = await createAddress({ variables: { input } });
     router.push("/account/address");
@@ -38,79 +43,14 @@ const CreateAddress: React.FC<CreateAddressProps> = ({}) => {
     }
     return;
   };
+
   return (
     <Layout>
-      <h1>สร้างที่อยู่การจัดส่ง</h1>
-      <Formik
-        initialValues={{
-          line1: "",
-          line2: "",
-          subdistrict: "",
-          district: "",
-          province: "",
-          country: "",
-          postcode: "",
-        }}
-        onSubmit={(values) => handleOnSubmit(values)}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <InputField
-              name="line1"
-              placeholder="Address line 1"
-              label="line1"
-            />
-            <InputField
-              name="line2"
-              placeholder="Address line 2"
-              label="line2"
-            />
-            <Flex>
-              <InputField
-                name="subdistrict"
-                placeholder="subdistrict"
-                label="subdistrict"
-              />
-              <InputField
-                name="district"
-                placeholder="district"
-                label="district"
-              />
-            </Flex>
-            <Flex>
-              {" "}
-              <InputField
-                name="province"
-                placeholder="province"
-                label="province"
-              />{" "}
-              <InputField
-                name="country"
-                placeholder="country"
-                label="country"
-              />
-            </Flex>
-            <Flex>
-              {" "}
-              <InputField
-                name="postcode"
-                placeholder="postcode"
-                label="postcode"
-              />{" "}
-            </Flex>
-
-            <Button
-              mt={4}
-              type="submit"
-              isLoading={isSubmitting}
-              colorScheme="teal"
-            >
-              {" "}
-              Update
-            </Button>
-          </Form>
-        )}
-      </Formik>
+      <h1>Add an address</h1>
+      <AddressEditor
+        onSubmitForm={handleSubmitForm}
+        initialAddressData={null}
+      />
     </Layout>
   );
 };
