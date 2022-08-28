@@ -4,7 +4,10 @@ import { UseFormSetError } from "react-hook-form";
 import AddressEditor, {
   AddressFormValues,
 } from "../../../components/forms/AddressEditor";
-import { Layout } from "../../../components/Layout";
+import { Layout } from "../../../components/layouts/Layout";
+
+import PageHeading from "../../../components/typography/PageHeading";
+import { Wrapper } from "../../../components/Wrapper";
 import {
   AddressInput,
   useCreateAddressMutation,
@@ -45,12 +48,14 @@ const CreateAddress = ({}) => {
   };
 
   return (
-    <Layout>
-      <h1>Add an address</h1>
-      <AddressEditor
-        onSubmitForm={handleSubmitForm}
-        initialAddressData={null}
-      />
+    <Layout heading="Add address">
+      <Wrapper variant="small">
+        <PageHeading heading="Edit address" />
+        <AddressEditor
+          onSubmitForm={handleSubmitForm}
+          initialAddressData={null}
+        />
+      </Wrapper>
     </Layout>
   );
 };

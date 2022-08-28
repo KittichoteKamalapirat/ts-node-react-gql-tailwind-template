@@ -4,7 +4,10 @@ import { UseFormSetError } from "react-hook-form";
 import AddressEditor, {
   AddressFormValues,
 } from "../../../components/forms/AddressEditor";
-import { Layout } from "../../../components/Layout";
+import { Layout } from "../../../components/layouts/Layout";
+
+import PageHeading from "../../../components/typography/PageHeading";
+import { Wrapper } from "../../../components/Wrapper";
 import {
   Address,
   AddressInput,
@@ -54,7 +57,7 @@ const EditAddress: React.FC<EditAddressProps> = ({}) => {
 
   if (loading) {
     return (
-      <Layout>
+      <Layout heading="loading">
         <div>loading ...</div>
       </Layout>
     );
@@ -62,18 +65,20 @@ const EditAddress: React.FC<EditAddressProps> = ({}) => {
 
   if (!loading && !data) {
     return (
-      <Layout>
-        <div>ไม่พบที่อยู่ของคุณ</div>
+      <Layout heading="No address">
+        <div>Address not found</div>
       </Layout>
     );
   }
   return (
-    <Layout>
-      <h1>Edit an address</h1>
-      <AddressEditor
-        onSubmitForm={handleSubmitForm}
-        initialAddressData={data?.address as Address}
-      />
+    <Layout heading="Edit address">
+      <Wrapper variant="small">
+        <PageHeading heading="Edit address" />
+        <AddressEditor
+          onSubmitForm={handleSubmitForm}
+          initialAddressData={data?.address as Address}
+        />
+      </Wrapper>
     </Layout>
   );
 };

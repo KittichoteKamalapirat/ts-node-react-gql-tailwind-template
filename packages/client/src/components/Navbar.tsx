@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   Heading,
   Image,
@@ -22,6 +21,8 @@ import { HomeIcon } from "./Icons/HomeIcon";
 import { AccountIcon } from "./Icons/AccountIcon";
 import { HeartIcon } from "./Icons/HeartIcon";
 import { ActivityIcon } from "./Icons/ActivityIcon";
+import { urlResolver } from "../lib/UrlResolver";
+import Button from "./Buttons/Button";
 
 interface NavbarProps {}
 
@@ -94,11 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
           <Input zIndex={2} placeholder="search" size="sm" variant="filled" />
         </InputGroup>
 
-        <NextLink href="/create-post">
-          <Button as={Link} mr={2}>
-            <PlusSquareIcon />{" "}
-          </Button>
-        </NextLink>
+        <Button label="create post" href={urlResolver.createPost()} />
       </Flex>
       <Flex
         zIndex={1}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout } from "../../../components/Layout";
+
 import {
   useAddressQuery,
   useDeleteAddressMutation,
@@ -15,6 +15,8 @@ import Button, {
   HTMLButtonType,
 } from "../../../components/Buttons/Button";
 import { urlResolver } from "../../../lib/UrlResolver";
+import { Layout } from "../../../components/layouts/Layout";
+import PageHeading from "../../../components/typography/PageHeading";
 
 interface addressProps {}
 
@@ -26,13 +28,13 @@ const Address: React.FC<addressProps> = ({}) => {
 
   if (loading) {
     return (
-      <Layout>
+      <Layout heading="Loading">
         <div>loading ...</div>
       </Layout>
     );
   }
   const noAddress = (
-    <Layout>
+    <Layout heading="No address">
       <Text>You have not added yoru address yet</Text>
 
       <Button
@@ -47,8 +49,8 @@ const Address: React.FC<addressProps> = ({}) => {
   return !data ? (
     noAddress
   ) : (
-    <Layout>
-      <h1>Address</h1>
+    <Layout heading="My address">
+      <PageHeading>Address</PageHeading>
       <Box>
         <Text>
           {data?.address.line1} {data?.address.line2}{" "}

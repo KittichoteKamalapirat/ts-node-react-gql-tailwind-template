@@ -1,5 +1,5 @@
 import { useMeQuery, usePostsQuery } from "../generated/graphql";
-import { Layout } from "../components/Layout";
+
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/layout";
 import {
@@ -15,6 +15,7 @@ import React from "react";
 import { UpvoteSection } from "../components/UpvoteSection";
 import { EditDeletePostButtons } from "../components/EditDeletePostButtons";
 import { withApollo } from "../util/withApollo";
+import { Layout } from "../components/layouts/Layout";
 
 const Index = () => {
   const { data: meData } = useMeQuery(); //this is renaming synta when destructing data => meData

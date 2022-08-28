@@ -1,10 +1,9 @@
-import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import React from "react";
-import { Layout } from "../components/Layout";
-import { Wrapper } from "../components/Wrapper";
+import NextLink from "next/link";
+import { Layout } from "../components/layouts/Layout";
 import { useMeQuery, useVotedPostsQuery } from "../generated/graphql";
 import { withApollo } from "../util/withApollo";
-import NextLink from "next/link";
 
 interface likeProps {}
 

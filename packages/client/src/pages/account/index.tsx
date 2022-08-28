@@ -1,40 +1,54 @@
 import React from "react";
-import { Layout } from "../../components/Layout";
-import NextLink from "next/link";
+
+import { useApolloClient } from "@apollo/client";
+import { InfoIcon, StarIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Divider,
   Flex,
-  IconButton,
   Image,
   Link,
   Text,
 } from "@chakra-ui/react";
-import { withApollo } from "../../util/withApollo";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { Layout } from "../../components/layouts/Layout";
+import { Error } from "../../components/skeletons/Error";
 import {
   useAddressQuery,
   useLogoutMutation,
   useMeQuery,
 } from "../../generated/graphql";
-import { useApolloClient } from "@apollo/client";
-import { useRouter } from "next/router";
-import { InfoIcon, StarIcon } from "@chakra-ui/icons";
+import { withApollo } from "../../util/withApollo";
 
 interface indexProps {}
 
 const Account: React.FC<indexProps> = ({}) => {
   const { data: meData, loading } = useMeQuery();
   const router = useRouter();
-  const { data: addressData, loading: addressLoading } = useAddressQuery();
+  const {
+    data: addressData,
+    loading: addressLoading,
+    error: addressError,
+  } = useAddressQuery();
 
   const [logout, { loading: logoutLoading }] = useLogoutMutation();
   const apolloClient = useApolloClient();
 
   let body;
-  if (loading) {
+
+  if (addressError) {
     return (
-      <Layout>
+      <Layout heading="error">
+        <Error text={addressError.message} />
+      </Layout>
+    );
+  }
+
+  if (loading || addressLoading) {
+    return (
+      <Layout heading="Loading">
         <div>loading ...</div>
       </Layout>
     );
@@ -109,7 +123,7 @@ const Account: React.FC<indexProps> = ({}) => {
     );
   }
 
-  return <Layout>{body}</Layout>;
+  return <Layout heading="My account">{body}</Layout>;
 };
 
 export default withApollo({ ssr: false })(Account);

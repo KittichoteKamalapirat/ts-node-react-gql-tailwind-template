@@ -1,4 +1,3 @@
-import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import React, { Dispatch, SetStateAction } from "react";
 import { Control, UseFormSetError } from "react-hook-form";
@@ -8,7 +7,8 @@ import Button, {
 } from "../components/Buttons/Button";
 import TextField, { TextFieldTypes } from "../components/forms/TextField";
 import useGeneralForm from "../components/hooks/useGeneralForm";
-import { Layout } from "../components/Layout";
+import { Layout } from "../components/layouts/Layout";
+
 import PageHeading from "../components/typography/PageHeading";
 import { Wrapper } from "../components/Wrapper";
 import { InputType } from "../constants/inputType";
@@ -75,7 +75,7 @@ export const Login: React.FC<{}> = ({}) => {
   );
 
   return (
-    <Layout>
+    <Layout heading="Log in">
       <Wrapper variant="small">
         <PageHeading heading="Log in" />
 
